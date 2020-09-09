@@ -1,5 +1,6 @@
 import Case
 import random
+import ColorList
 
 class Board : 
 
@@ -33,13 +34,14 @@ class Board :
                 while self.__boardMatrix[randX][randY].getEnd():
                     randX, randY = random.randint(0, self.__size - 1), random.randint(0, self.__size - 1)
                 self.__boardMatrix[randX][randY].setEnd(True)
+                self.__boardMatrix[randX][randY].setColor(ColorList.ColorList.staticColorList[i])
               
     
     #utility
     def show_boardMatrix(self):   #display state of the game
         for i in range (self.__size) : 
             for j in range (self.__size) : 
-                print(self.__boardMatrix[i][j].getEnd(), end=" ")
+                print(self.__boardMatrix[i][j].getColor(), end=" ")
             print()
     
     def getBoard(self):
