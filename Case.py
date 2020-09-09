@@ -15,3 +15,14 @@ class Case :
     def getColor(self):
         return self.__color
 
+    def setColor(self, color):
+        self.__color = color
+
+    def getEnd(self):
+        return self.__isAnEnd
+    
+    def setEnd(self, isEnd):
+        self.__isAnEnd = isEnd
+    
+    
+
