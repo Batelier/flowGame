@@ -1,3 +1,5 @@
+import Case
+
 class Board : 
 
     #__size
@@ -11,15 +13,17 @@ class Board :
 
     #methods -------------------
     def init_boardMatrix(self, size): #initialize matrix
-        lines = [0] * size #later replace 0 by a Case Object
+        lines = [Case.Case(False, None)] * size #later replace 0 by a Case Object
         return [lines] * size
 
     
-
     #utility
     def show_boardMatrix(self):   #display state of the game
-        for lines in self.__boardMatrix:
-            print(lines)
+        for i in range (self.__size) : 
+            for j in range (self.__size) : 
+                print(self.__boardMatrix[i][j].getColor(), end=" ")
+            print()
+                
 
 
     
