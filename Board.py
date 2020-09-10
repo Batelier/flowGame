@@ -3,10 +3,11 @@ import random
 import Utils
 
 class Board : 
-
-    #__size
-    #__boardMatrix
-    #__nbOfColor
+    """
+    __size : int
+    __boardMatrix : [[]]
+    __nbOfColor : int
+    """
 
     #constructor ---------------
     def __init__(self, size, nbOfColor): 
@@ -36,7 +37,6 @@ class Board :
                 self.__boardMatrix[randX][randY].setEnd(True)
                 self.__boardMatrix[randX][randY].setColor(Utils.Color.staticColorList[i])
               
-    
     #utility ------------
     def show_boardMatrix(self):   #display state of the game
         for i in range (self.__size) : 
@@ -45,12 +45,5 @@ class Board :
             print()
     
     def getBoard(self):
-        return self.__boardMatrix
-                
-
-
-    
-
-    
-    
+        return self.__boardMatrix   
         

@@ -1,10 +1,20 @@
 #Flow Game
-
+from tkinter import Tk, Label, Button
+import BoardInterface
 import Board
 import Case
 
-board = Board.Board(7, 3) #(size, nbOfColor)
+size, nbOfColor = 8, 3
+
+#back
+board = Board.Board(size, nbOfColor)
 board.init_EndCases()
 board.show_boardMatrix()
+
+#visual
+boardInterface = BoardInterface.BoardInterface(size, board)
+
+
+
 
 

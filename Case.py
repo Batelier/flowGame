@@ -23,6 +23,3 @@ class Case :
     
     def setEnd(self, isEnd):
         self.__isAnEnd = isEnd
-    
-    
-
