@@ -10,6 +10,8 @@ class BoardInterface: #Graphical interface view & interactions
     frame : Frame
     btnMatrix : [][] containing all buttons of the game
     """
+    btnMatrix = []
+
     def __init__(self, size, board):
         self.board = board
         root = Tk()
@@ -25,7 +27,7 @@ class BoardInterface: #Graphical interface view & interactions
         Grid.rowconfigure(self.frame, 7, weight=1)
         Grid.columnconfigure(self.frame, 0, weight=1)
 
-        self.btnMatrix = [] #
+        #self.btnMatrix = [] #
         for x in range(size):
             btnLine = []
             for y in range(size):
@@ -65,6 +67,7 @@ class BoardInterface: #Graphical interface view & interactions
         print("down key pressed")
         self.board.arrowKeyPressed(Utils.MoveList.DOWN.value)
 
+    @staticmethod
     def update_buttonColor(self, position, color): #à mettre en command avec les flèches
         self.btnMatrix[position[1]][position[0]].configure(bg = color)
 
@@ -72,11 +75,13 @@ class BoardInterface: #Graphical interface view & interactions
         x = event.x_root - self.frame.winfo_rootx()
         y = event.y_root - self.frame.winfo_rooty()
     
-        z = self.frame.grid_location(x, y) 
+        z = self.frame.grid_location(x, y)
+        print("Z  : ", str(z) )
+        print("Case clicked : ", str(self.board.getBoard()[z[1]][z[0]].getPos()), " master is : ", 
+            str(self.board.getBoard()[z[1]][z[0]].getEndMasterPos()))
 
         if (type(self.board.getBoard()[z[1]][z[0]]) == End.End):
             self.board.deselectAllEnds()
             self.board.getBoard()[z[1]][z[0]].setIsSelected(True)
-            self.board.setCurrentPos([z[1], z[0]])
-        
-            #print(str(type(self.board.getBoard()[z[1]][z[0]])), " is selected ? " + str(self.board.getBoard()[z[1]][z[0]].getIsSelected()))
+            self.board.setCurrentPos(self.board.getBoard()[z[1]][z[0]].getCurrentPosOfLine())
+            self.board.setCurrentEndPos([z[1], z[0]])

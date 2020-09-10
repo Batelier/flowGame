@@ -2,6 +2,7 @@ import Case
 import random
 import Utils
 import End
+import BoardInterface
 
 class Board :
     """
@@ -18,6 +19,7 @@ class Board :
         self.__nbOfColor = nbOfColor
         self.__listOfEnd = [] #containing all extremities
         self.__currentPos = []
+        self.__currentEndPos = [] #current pos of the end master of the line 
 
     #methods -------------------
     def init_boardMatrix(self, size): #initialize matrix
@@ -25,7 +27,7 @@ class Board :
         for j in range (size) :
             line = []
             for i in range (size):
-                line.append(Case.Case(None))
+                line.append(Case.Case(None, [j, i]))
             matrix.append(line)
         return matrix
         
@@ -35,7 +37,7 @@ class Board :
                 randX, randY = random.randint(0, self.__size - 1), random.randint(0, self.__size - 1)
                 while type(self.__boardMatrix[randX][randY]) == End.End :
                     randX, randY = random.randint(0, self.__size - 1), random.randint(0, self.__size - 1)
-                newEnd = End.End(Utils.Color.staticColorList[i])
+                newEnd = End.End(Utils.Color.staticColorList[i], [randX, randY])
                 self.__boardMatrix[randX][randY] = newEnd
                 self.__listOfEnd.append(newEnd)
                 self.__currentPos = [randX, randY]
@@ -49,12 +51,33 @@ class Board :
 
     #Movement logic ---------------------------------------
     def arrowKeyPressed(self, move): #check if can move, move, update current Case, update EndList
-        potentialNextPos = [self.getCurrentPos()[0] + move[0], self.getCurrentPos()[1] + move[1]]
-        if not self.checkIfPosPossible(potentialNextPos):
+        nextPos = [self.getCurrentPos()[0] + move[0], self.getCurrentPos()[1] + move[1]]
+        if not self.checkIfPosPossible(nextPos):
             return
-        if not self.checkIfMovePossible(potentialNextPos):
+        if not self.checkIfMovePossible(nextPos):
             return 
-        self.setCurrentPos(potentialNextPos)
+
+        self.setCurrentPos(nextPos)
+
+        print("Current End pos : ", str(self.__currentEndPos))
+        currentCase = self.__boardMatrix[nextPos[0]][nextPos[1]]
+        currentMaster = self.__boardMatrix[self.__currentEndPos[0]][self.__currentEndPos[1]]
+
+        #link current master to the current case
+        currentMaster.linkCase(currentCase)
+
+        #set New Color
+        newColor = self.getAttenuateColorOf(currentMaster.getColor())
+        currentCase.setColor(newColor)
+        self.update_buttonColor(currentCase.getPos(), newColor)
+        #BoardInterface.BoardInterface.update_buttonColor(currentCase.getPos(), newColor)
+        self.show_boardMatrix()
+        
+    def update_buttonColor(self, position, color): #à mettre en command avec les flèches
+        BoardInterface.BoardInterface.btnMatrix[position[0]][position[1]].configure(bg = color)
+
+    def getAttenuateColorOf(self, string): #Get the subcolor of an end
+        return Utils.Color.subColor[Utils.Color.staticColorList.index(string)]
 
     def checkIfPosPossible(self, pos): #check if we are trying to go on a Case that is in the Game or not
         for i in pos : 
@@ -87,3 +110,6 @@ class Board :
     def setCurrentPos(self, currentPos):
         self.__currentPos = currentPos
         print("current pos : ", str(self.getCurrentPos()))
+    
+    def setCurrentEndPos(self, pos): #pos of the selected End
+        self.__currentEndPos = pos
