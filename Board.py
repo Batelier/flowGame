@@ -1,6 +1,7 @@
 import Case
 import random
 import Utils
+import End
 
 class Board : 
     """
@@ -22,26 +23,26 @@ class Board :
         for j in range (size) :
             line = []
             for i in range (size):
-                line.append(Case.Case(False, None))
+                line.append(Case.Case(None))
             matrix.append(line)
         return matrix
 
         
     def init_EndCases(self): #define the Cases that are marked as End
-        #self.__boardMatrix[3][0].setColor("TEST")
         for i in range(self.__nbOfColor):
             for j in range (2):
                 randX, randY = random.randint(0, self.__size - 1), random.randint(0, self.__size - 1)
-                while self.__boardMatrix[randX][randY].getEnd():
+                while type(self.__boardMatrix[randX][randY]) == End.End :
                     randX, randY = random.randint(0, self.__size - 1), random.randint(0, self.__size - 1)
-                self.__boardMatrix[randX][randY].setEnd(True)
-                self.__boardMatrix[randX][randY].setColor(Utils.Color.staticColorList[i])
+                self.__boardMatrix[randX][randY] = End.End(Utils.Color.staticColorList[i])
+                #self.__boardMatrix[randX][randY].setColor()
               
     #utility ------------
     def show_boardMatrix(self):   #display state of the game
         for i in range (self.__size) : 
             for j in range (self.__size) : 
                 print(self.__boardMatrix[i][j].getColor(), end=" ")
+                #print(type(self.__boardMatrix[i][j]), end = " ")
             print()
     
     def getBoard(self):
