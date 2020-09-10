@@ -1,9 +1,7 @@
-class Case :
+class Case : #a Case with a color, End inherit from Case
 
     """
-    isAnEnd : bool
     color : string / int
-    isLinked : bool #if the end is linked to another end
     """
 
     #constructor

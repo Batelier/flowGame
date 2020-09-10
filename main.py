@@ -13,9 +13,3 @@ board.show_boardMatrix()
 
 #visual
 boardInterface = BoardInterface.BoardInterface(size, board)
-
-
-
-
-
-
