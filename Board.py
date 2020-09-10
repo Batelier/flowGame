@@ -1,6 +1,6 @@
 import Case
 import random
-import ColorList
+import Utils
 
 class Board : 
 
@@ -27,17 +27,17 @@ class Board :
 
         
     def init_EndCases(self): #define the Cases that are marked as End
-        
+        #self.__boardMatrix[3][0].setColor("TEST")
         for i in range(self.__nbOfColor):
             for j in range (2):
                 randX, randY = random.randint(0, self.__size - 1), random.randint(0, self.__size - 1)
                 while self.__boardMatrix[randX][randY].getEnd():
                     randX, randY = random.randint(0, self.__size - 1), random.randint(0, self.__size - 1)
                 self.__boardMatrix[randX][randY].setEnd(True)
-                self.__boardMatrix[randX][randY].setColor(ColorList.ColorList.staticColorList[i])
+                self.__boardMatrix[randX][randY].setColor(Utils.Color.staticColorList[i])
               
     
-    #utility
+    #utility ------------
     def show_boardMatrix(self):   #display state of the game
         for i in range (self.__size) : 
             for j in range (self.__size) : 
