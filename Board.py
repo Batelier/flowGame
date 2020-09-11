@@ -111,26 +111,27 @@ class Board :
             return False
         
         #if we find the other End Case to finish the line
+        print("POS comparison : ", str(nextCase.getEndMasterPos()), " current End : ", str(currentEnd.getPos()))
         if (nextCaseEnd.getColor() == currentEnd.getColor() and nextCase.getEndMasterPos() != currentEnd.getPos()):
             print(str(nextCaseEnd.getColor()), " LINE COMPLETED")
         
-        #removing completed End
-        i = 0
-        while (i < len(self.__listOfEnd)):
-            if self.__listOfEnd[i].getColor() == nextCaseEnd.getColor():
-                self.update_buttonColor(self.__listOfEnd[i].getPos(), Utils.Color.victoryColor)
-                self.__listOfEnd.pop(i)
-                i -= 1
-            i += 1
+            #removing completed End
+            i = 0
+            while (i < len(self.__listOfEnd)):
+                if self.__listOfEnd[i].getColor() == nextCaseEnd.getColor():
+                    self.update_buttonColor(self.__listOfEnd[i].getPos(), Utils.Color.victoryColor)
+                    self.__listOfEnd.pop(i)
+                    i -= 1
+                i += 1
 
-        #attributing new current End
-        try:
-            self.__currentEndPos = self.__listOfEnd[0]
-            self.__currentPos = self.__listOfEnd[0].getPos()
-        except :
-            print("THE GAME IS FINISHED")
-            self.__boardCompleted = True
-            self.victoryAnimation()
+            #attributing new current End
+            try:
+                self.__currentEndPos = self.__listOfEnd[0]
+                self.__currentPos = self.__listOfEnd[0].getPos()
+            except :
+                print("THE GAME IS FINISHED")
+                self.__boardCompleted = True
+                self.victoryAnimation()
     
     def victoryAnimation(self):
         for i in range(self.__size):
