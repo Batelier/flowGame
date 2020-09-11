@@ -4,6 +4,7 @@ import BoardInterface
 import Board
 import Case
 
+# 7 color maximum
 size, nbOfColor = 10, 3
 
 #back

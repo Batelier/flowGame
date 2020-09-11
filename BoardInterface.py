@@ -28,8 +28,7 @@ class BoardInterface: #Graphical interface view & interactions
         grid.grid(sticky=N+S+E+W, column=0, row=7, columnspan=2)
         Grid.rowconfigure(self.frame, 7, weight=1)
         Grid.columnconfigure(self.frame, 0, weight=1)
-
-        #self.btnMatrix = [] #
+        
         for x in range(size):
             btnLine = []
             for y in range(size):

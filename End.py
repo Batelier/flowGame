@@ -6,7 +6,7 @@ class End(Case.Case):
 
     def __init__(self, color, pos):
         super().__init__(color, pos)
-        self.__color = color
+        #self.__color = color
         self.__endMasterPos = pos
         self.__line = [pos] # pass
         self.isSelected = False

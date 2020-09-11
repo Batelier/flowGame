@@ -159,6 +159,7 @@ class Board :
             print(self.__listOfEnd[i].getColor()) 
         print("END LIST OF END")
 
+    #getter setter ---------------------
     def getBoard(self):
         return self.__boardMatrix
 
