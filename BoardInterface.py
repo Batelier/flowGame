@@ -74,19 +74,23 @@ class BoardInterface: #Graphical interface view & interactions
         self.btnMatrix[position[1]][position[0]].configure(bg = color)
 
     def btnCommand(self, event): #Used to select an End, set The current Pos Case
-        x = event.x_root - self.frame.winfo_rootx()
-        y = event.y_root - self.frame.winfo_rooty()
-    
-        z = self.frame.grid_location(x, y)
-        print("Case clicked : ", str(self.board.getBoard()[z[1]][z[0]].getPos()), " master is : ", 
-            str(self.board.getBoard()[z[1]][z[0]].getEndMasterPos()))
-        #if master is completed, return
+        try:
+            x = event.x_root - self.frame.winfo_rootx()
+            y = event.y_root - self.frame.winfo_rooty()
+        
+            z = self.frame.grid_location(x, y)
+            print("Case clicked : ", str(self.board.getBoard()[z[1]][z[0]].getPos()), " master is : ", 
+                str(self.board.getBoard()[z[1]][z[0]].getEndMasterPos()))
+            #if master is completed, return
 
-        if (type(self.board.getBoard()[z[1]][z[0]]) == End.End):
-            if self.board.getListOfEnd().__contains__(self.board.getBoard()[z[1]][z[0]]):
-                self.board.deselectAllEnds()
-                self.board.getBoard()[z[1]][z[0]].setIsSelected(True)
-                self.board.setCurrentPos(self.board.getBoard()[z[1]][z[0]].getCurrentPosOfLine())
-                self.board.setCurrentEndPos([z[1], z[0]])
+            if (type(self.board.getBoard()[z[1]][z[0]]) == End.End):
+                if self.board.getListOfEnd().__contains__(self.board.getBoard()[z[1]][z[0]]):
+                    self.board.deselectAllEnds()
+                    self.board.getBoard()[z[1]][z[0]].setIsSelected(True)
+                    self.board.setCurrentPos(self.board.getBoard()[z[1]][z[0]].getCurrentPosOfLine())
+                    self.board.setCurrentEndPos([z[1], z[0]])
+        except :
+            print("Please click on the board ...")
+        
 
     

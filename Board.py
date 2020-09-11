@@ -43,42 +43,43 @@ class Board :
                 self.__boardMatrix[randX][randY] = newEnd
                 self.__listOfEnd.append(newEnd)
                 self.__currentPos = [randX, randY]
-                #self.__boardMatrix[randX][randY].setColor()
 
     def deselectAllEnds(self):
         for i in self.__listOfEnd:
             i.setIsSelected(False)
-        #for i in self.__listOfEnd:
-        #    print(i.getIsSelected(), end = " ")
 
     #Movement logic ---------------------------------------
     def arrowKeyPressed(self, move): #check if can move, move, update current Case, update EndList
         if self.__boardCompleted : return
 
-        nextPos = [self.getCurrentPos()[0] + move[0], self.getCurrentPos()[1] + move[1]]
-        if not self.checkIfPosPossible(nextPos): #check if out of bound
-            return
-        #if self.checkIfLineCompleted(nextPos):
-        #    pass
-        self.checkIfLineCompleted(nextPos)
-        if not self.checkIfMovePossible(nextPos): #check if occupied by another color
-            return 
+        try:
+            nextPos = [self.getCurrentPos()[0] + move[0], self.getCurrentPos()[1] + move[1]]
+            if not self.checkIfPosPossible(nextPos): #check if out of bound
+                return
+            #if self.checkIfLineCompleted(nextPos):
+            #    pass
+            self.checkIfLineCompleted(nextPos)
+            if not self.checkIfMovePossible(nextPos): #check if occupied by another color
+                return 
 
-        self.setCurrentPos(nextPos)
+            self.setCurrentPos(nextPos)
 
-        print("Current End pos : ", str(self.__currentEndPos))
-        currentCase = self.__boardMatrix[nextPos[0]][nextPos[1]]
-        currentMaster = self.__boardMatrix[self.__currentEndPos[0]][self.__currentEndPos[1]]
+            print("Current End pos : ", str(self.__currentEndPos))
+            currentCase = self.__boardMatrix[nextPos[0]][nextPos[1]]
+            currentMaster = self.__boardMatrix[self.__currentEndPos[0]][self.__currentEndPos[1]]
 
-        #link current master to the current case
-        currentMaster.linkCase(currentCase)
+            #link current master to the current case
+            currentMaster.linkCase(currentCase)
 
-        #set New Color
-        newColor = self.getAttenuateColorOf(currentMaster.getColor())
-        currentCase.setColor(newColor)
-        self.update_buttonColor(currentCase.getPos(), newColor)
-        #BoardInterface.BoardInterface.update_buttonColor(currentCase.getPos(), newColor)
-        #self.show_boardMatrix()
+            #set New Color
+            newColor = self.getAttenuateColorOf(currentMaster.getColor())
+            currentCase.setColor(newColor)
+            self.update_buttonColor(currentCase.getPos(), newColor)
+            #BoardInterface.BoardInterface.update_buttonColor(currentCase.getPos(), newColor)
+            #self.show_boardMatrix()
+        except :
+            print("An error occured, please select an end")
+
         
     def update_buttonColor(self, position, color): #à mettre en command avec les flèches
         BoardInterface.BoardInterface.btnMatrix[position[0]][position[1]].configure(bg = color)
@@ -94,9 +95,8 @@ class Board :
         return True
     
     def checkIfMovePossible(self, pos): #check if the rules of the game allow the move or not
-        # +++ Check color of line or end to know f we can complete a line
         if not (self.__boardMatrix[pos[0]][pos[1]]).getColor() == None:
-            print("impossible path : Case already occupied")
+            #print("impossible path : Case already occupied")
             return False
         return True
     
@@ -118,6 +118,7 @@ class Board :
         i = 0
         while (i < len(self.__listOfEnd)):
             if self.__listOfEnd[i].getColor() == nextCaseEnd.getColor():
+                self.update_buttonColor(self.__listOfEnd[i].getPos(), Utils.Color.victoryColor)
                 self.__listOfEnd.pop(i)
                 i -= 1
             i += 1
@@ -125,6 +126,7 @@ class Board :
         #attributing new current End
         try:
             self.__currentEndPos = self.__listOfEnd[0]
+            self.__currentPos = self.__listOfEnd[0].getPos()
         except :
             print("THE GAME IS FINISHED")
             self.__boardCompleted = True

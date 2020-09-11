@@ -4,7 +4,7 @@ import BoardInterface
 import Board
 import Case
 
-size, nbOfColor = 5, 3
+size, nbOfColor = 15, 6
 
 #back
 board = Board.Board(size, nbOfColor)
