@@ -42,7 +42,9 @@ class Board :
                 newEnd = End.End(Utils.Color.staticColorList[i], [randX, randY])
                 self.__boardMatrix[randX][randY] = newEnd
                 self.__listOfEnd.append(newEnd)
-                self.__currentPos = [randX, randY]
+                #self.__currentPos = [randX, randY]
+                self.__currentEndPos = self.__listOfEnd[0].getPos()
+                self.__currentPos = self.__listOfEnd[0].getPos()
 
     def deselectAllEnds(self):
         for i in self.__listOfEnd:
@@ -51,7 +53,7 @@ class Board :
     #Movement logic ---------------------------------------
     def arrowKeyPressed(self, move): #check if can move, move, update current Case, update EndList
         if self.__boardCompleted : return
-
+        print("INFO : ", str(self.getCurrentPos()))
         try:
             nextPos = [self.getCurrentPos()[0] + move[0], self.getCurrentPos()[1] + move[1]]
             if not self.checkIfPosPossible(nextPos): #check if out of bound
@@ -114,7 +116,7 @@ class Board :
         print("POS comparison : ", str(nextCase.getEndMasterPos()), " current End : ", str(currentEnd.getPos()))
         if (nextCaseEnd.getColor() == currentEnd.getColor() and nextCase.getEndMasterPos() != currentEnd.getPos()):
             print(str(nextCaseEnd.getColor()), " LINE COMPLETED")
-        
+
             #removing completed End
             i = 0
             while (i < len(self.__listOfEnd)):
@@ -126,7 +128,7 @@ class Board :
 
             #attributing new current End
             try:
-                self.__currentEndPos = self.__listOfEnd[0]
+                self.__currentEndPos = self.__listOfEnd[0].getPos()
                 self.__currentPos = self.__listOfEnd[0].getPos()
             except :
                 print("THE GAME IS FINISHED")
@@ -172,3 +174,6 @@ class Board :
 
     def getListOfEnd(self):
         return self.__listOfEnd
+
+    def isBoardCompleted(self):
+        return self.__boardCompleted
