@@ -1,9 +1,9 @@
 from enum import Enum
 
 class Color():
-    staticColorList = ["RED", "BLUE", "GREEN", "YELLOW", "PURPLE", "BLACK", "GOLD"]
-    subColor = ["CORAL1", "STEELBLUE1", "PALE GREEN", "KHAKI", "ORCHID3", "GRAY29", "LIGHT GOLDENROD"]
-
+    staticColorList = ["RED", "BLUE", "GREEN", "YELLOW", "PURPLE", "BLACK", "CYAN2"]
+    subColor = ["CORAL1", "STEELBLUE1", "PALE GREEN", "KHAKI", "ORCHID3", "GRAY29", "CYAN3"]
+    victoryColor = "GOLD"
 
 class MoveList(Enum):
     LEFT = [0, -1]

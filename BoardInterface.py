@@ -9,10 +9,12 @@ class BoardInterface: #Graphical interface view & interactions
     board : Board
     frame : Frame
     btnMatrix : [][] containing all buttons of the game
+    size : int
     """
     btnMatrix = []
 
     def __init__(self, size, board):
+        self.size = size
         self.board = board
         root = Tk()
         root.geometry("500x500")
@@ -76,12 +78,15 @@ class BoardInterface: #Graphical interface view & interactions
         y = event.y_root - self.frame.winfo_rooty()
     
         z = self.frame.grid_location(x, y)
-        print("Z  : ", str(z) )
         print("Case clicked : ", str(self.board.getBoard()[z[1]][z[0]].getPos()), " master is : ", 
             str(self.board.getBoard()[z[1]][z[0]].getEndMasterPos()))
+        #if master is completed, return
 
         if (type(self.board.getBoard()[z[1]][z[0]]) == End.End):
-            self.board.deselectAllEnds()
-            self.board.getBoard()[z[1]][z[0]].setIsSelected(True)
-            self.board.setCurrentPos(self.board.getBoard()[z[1]][z[0]].getCurrentPosOfLine())
-            self.board.setCurrentEndPos([z[1], z[0]])
+            if self.board.getListOfEnd().__contains__(self.board.getBoard()[z[1]][z[0]]):
+                self.board.deselectAllEnds()
+                self.board.getBoard()[z[1]][z[0]].setIsSelected(True)
+                self.board.setCurrentPos(self.board.getBoard()[z[1]][z[0]].getCurrentPosOfLine())
+                self.board.setCurrentEndPos([z[1], z[0]])
+
+    
