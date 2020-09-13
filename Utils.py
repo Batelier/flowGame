@@ -1,7 +1,7 @@
 from enum import Enum
 
 class Color():
-    staticColorList = ["RED", "BLUE", "GREEN", "YELLOW", "PURPLE", "BLACK", "CYAN2"]
+    staticColorList = ["RED", "BLUE", "GREEN", "YELLOW", "PURPLE", "BLACK", "CYAN2", None]
     subColor = ["CORAL1", "STEELBLUE1", "PALE GREEN", "KHAKI", "ORCHID3", "GRAY29", "CYAN3"]
     victoryColor = "GOLD"
     lostColor = "BLACK"

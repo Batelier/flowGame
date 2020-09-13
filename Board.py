@@ -4,6 +4,7 @@ import Utils
 import End
 import BoardInterface
 import time
+import sys
 
 class Board :
     """
@@ -24,7 +25,7 @@ class Board :
         self.__boardCompleted = False
 
     #methods -------------------
-    def init_boardMatrix(self, size, nbOfColor): #initialize matrix
+    def init_RandomBoardMatrix(self, size, nbOfColor): #initialize matrix
         self.__nbOfColor = nbOfColor
         self.__size = size
         matrix = []
@@ -34,9 +35,9 @@ class Board :
                 line.append(Case.Case(None, [j, i]))
             matrix.append(line)
         self.__boardMatrix = matrix
-        self.init_EndCases()
+        self.init_RandomEndCases()
         
-    def init_EndCases(self): #define the Cases that are marked as End
+    def init_RandomEndCases(self): #define the Cases that are marked as End
         for i in range(self.__nbOfColor):
             for j in range (2):
                 randX, randY = random.randint(0, self.__size - 1), random.randint(0, self.__size - 1)
@@ -45,8 +46,44 @@ class Board :
                 newEnd = End.End(Utils.Color.staticColorList[i], [randX, randY])
                 self.__boardMatrix[randX][randY] = newEnd
                 self.__listOfEnd.append(newEnd)
-                self.__currentEndPos = self.__listOfEnd[0].getPos()
-                self.__currentPos = self.__listOfEnd[0].getPos()
+        self.__currentEndPos = self.__listOfEnd[0].getPos()
+        self.__currentPos = self.__listOfEnd[0].getPos()
+    
+    def init_boardMatrixFromFile(self, fileLocation): #import premade terrain from text file
+        try:
+            terrainFile = open(fileLocation, "r")
+            txt = terrainFile.read()
+            txt = txt + "\n"
+            line = []
+            matrix  =[]
+            x, y = 0, 0
+            for i in txt :
+                if i == " ":
+                    x += 1
+                    continue
+                elif i == "\n":
+                    # for i in range(len(line)): print(line[i].getColor())
+                    print(len(line))
+                    matrix.append(line)
+                    line = []
+                    x = 0
+                    y += 1
+                    continue
+                elif int(i) == 0:
+                    line.append(Case.Case(None, [y, x]))
+                else:
+                    newEnd = End.End(Utils.Color.staticColorList[int(i) - 1], [y, x])
+                    self.__listOfEnd.append(newEnd)
+                    line.append(newEnd)
+            # print("Matrix lenght : ", str(len(matrix)))
+            self.__size = len(matrix[0])
+            self.__boardMatrix = matrix
+            self.__currentEndPos = self.__listOfEnd[0].getPos()
+            self.__currentPos = self.__listOfEnd[0].getPos()
+
+        except :
+            print("An error occured while reading the file")
+        
 
     def deselectAllEnds(self):
         for i in self.__listOfEnd:
@@ -135,7 +172,7 @@ class Board :
             except :
                 print("THE GAME IS FINISHED")
                 self.__boardCompleted = True
-                self.endAnimation(self.checkIfVictory())
+                self.endAnimation(self.checkIfVictory())                
 
     def checkIfVictory(self): #check if every case of the game have a color attributed
         for line in self.__boardMatrix:
