@@ -4,12 +4,14 @@ import BoardInterface
 import Board
 import Case
 
-# 7 color maximum
-size, nbOfColor = 10, 3
+#For random terrain creation : 
+randomTerrainGeneration = True
+size, nbOfColor = 5, 2 # 7 color maximum
 
 #back
-board = Board.Board(size, nbOfColor)
-board.init_EndCases()
+board = Board.Board()
+if randomTerrainGeneration : 
+    board.init_boardMatrix(size, nbOfColor)
 board.show_boardMatrix()
 
 #visual

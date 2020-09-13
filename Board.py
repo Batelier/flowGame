@@ -14,24 +14,27 @@ class Board :
     """
 
     #constructor ---------------
-    def __init__(self, size, nbOfColor): 
-        self.__size = size
-        self.__boardMatrix = self.init_boardMatrix(self.__size)
-        self.__nbOfColor = nbOfColor
+    def __init__(self): 
+        self.__size = None
+        self.__boardMatrix = None
+        self.__nbOfColor = None
         self.__listOfEnd = [] #containing all extremities
         self.__currentPos = []
         self.__currentEndPos = [] #current pos of the end master of the line 
         self.__boardCompleted = False
 
     #methods -------------------
-    def init_boardMatrix(self, size): #initialize matrix
+    def init_boardMatrix(self, size, nbOfColor): #initialize matrix
+        self.__nbOfColor = nbOfColor
+        self.__size = size
         matrix = []
         for j in range (size) :
             line = []
             for i in range (size):
                 line.append(Case.Case(None, [j, i]))
             matrix.append(line)
-        return matrix
+        self.__boardMatrix = matrix
+        self.init_EndCases()
         
     def init_EndCases(self): #define the Cases that are marked as End
         for i in range(self.__nbOfColor):
@@ -42,7 +45,6 @@ class Board :
                 newEnd = End.End(Utils.Color.staticColorList[i], [randX, randY])
                 self.__boardMatrix[randX][randY] = newEnd
                 self.__listOfEnd.append(newEnd)
-                #self.__currentPos = [randX, randY]
                 self.__currentEndPos = self.__listOfEnd[0].getPos()
                 self.__currentPos = self.__listOfEnd[0].getPos()
 
@@ -133,14 +135,27 @@ class Board :
             except :
                 print("THE GAME IS FINISHED")
                 self.__boardCompleted = True
-                self.victoryAnimation()
+                self.endAnimation(self.checkIfVictory())
+
+    def checkIfVictory(self): #check if every case of the game have a color attributed
+        for line in self.__boardMatrix:
+            for case in line:
+                if case.getColor() == None:
+                    return False
+        return True
     
-    def victoryAnimation(self):
+    def endAnimation(self, boolean):
+        color = Utils.Color.lostColor
+        endText = Utils.Text.lostText
+        if boolean:
+            color = Utils.Color.victoryColor
+            endText = Utils.Text.victoryText
         for i in range(self.__size):
             for j in range(self.__size):
-                self.update_buttonColor([i,j], Utils.Color.victoryColor)
+                self.update_buttonColor([i,j], color)
                 self.update_victoryText([i, j])
             #time.sleep(.01)
+        print(endText)
     
     def update_victoryText(self, position): #à mettre en command avec les flèches
         BoardInterface.BoardInterface.btnMatrix[position[0]][position[1]]['text'] == 'Victory'
