@@ -1,10 +1,12 @@
-import Case
-import random
-import Utils
-import End
-import BoardInterface
-import time
 import sys
+#Warning but importation is at runtime
+from subclasses import Case
+import random
+from subclasses import Utils
+from subclasses import End
+from subclasses import BoardInterface
+import time
+
 
 class Board :
     """

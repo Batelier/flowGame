@@ -1,6 +1,6 @@
 #A case that is an extremity, inherit from Case
-import Case
-import Utils
+from subclasses import Case
+from subclasses import Utils
 
 class End(Case.Case):
 

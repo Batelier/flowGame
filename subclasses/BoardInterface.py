@@ -1,7 +1,7 @@
 from tkinter import *
-import Board
-import End
-import Utils
+from subclasses import Board
+from subclasses import End
+from subclasses import Utils
 
 class BoardInterface: #Graphical interface view & interactions
 

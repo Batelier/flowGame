@@ -1,9 +1,11 @@
 #Flow Game
 from tkinter import Tk, Label, Button
-import BoardInterface
-import Board
-import Case
 import sys
+
+import subclasses
+from subclasses import BoardInterface
+from subclasses import Board
+from subclasses import Case
 
 #For random terrain creation : 
 randomTerrainGeneration = False
